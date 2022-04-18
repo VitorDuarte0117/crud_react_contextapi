@@ -2,8 +2,10 @@ import React, { useState, useContext, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { useParams } from "react-router";
 
-export const EditUser = (props) => {
+export const EditUser = () => {
+    let { id } = useParams();
     const { editUser, users } = useContext(GlobalContext);
     const [selectedUser, setSelectedUser] = useState({
         id: "",
@@ -11,13 +13,14 @@ export const EditUser = (props) => {
     });
 
     const navigate = useNavigate();
-    const currentUserId = props.id;
+    const currentUserId = id;
 
     useEffect(() => {
         const userId = currentUserId;
         const selectedUser = users.find((user) => user.id === userId);
+        console.log(selectedUser);
         setSelectedUser(selectedUser);
-    }, [currentUserId, users]);
+    }, []);
 
     const onChange = (e) => {
         setSelectedUser({ ...selectedUser, [e.target.name]: e.target.value });
